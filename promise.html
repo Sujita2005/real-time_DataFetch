@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Users</title>
+
+    <style>
+        .cnt {
+            height:fit-content;
+            width: 100%;
+            background-color: black;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap:5px;
+        
+        }
+
+        .userBox {
+            height:140px;
+            width:30%;
+            color: white;
+            background-color: #343060;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 18px;
+            text-align: center;
+            
+        }
+
+
+       
+    @media (max-width: 768px) {
+      .userBox {
+        width: 100%;
+      }
+    }
+
+   
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .userBox {
+        width: 45%;
+      }
+    }
+
+    </style>
+</head>
+<body>
+
+    <div class="cnt"></div>
+
+    <script>
+        let cnt = document.getElementsByClassName("cnt")[0];
+
+        fetch("https://dummyjson.com/users")
+        .then((response) => response.json())
+        .then((data) => {
+            let users = data.users;
+
+            users.map((user) => {
+                // Create a div for each user
+                let userDiv = document.createElement("div");
+                userDiv.classList.add("userBox");
+
+                // Set full name as innerHTML (same line)
+                userDiv.innerHTML = `${user.firstName} ${user.lastName}`;
+
+                userDiv.innerHTML += `<br>Age: ${user.age}`;
+
+                userDiv.innerHTML += `<br>  ${user.gender}`;
+                userDiv.innerHTML += `<hr>`;
+
+                userDiv.innerHTML += `<br>  ${user.email}`;
+                userDiv.innerHTML += `<br>  ${user.phone}`;
+
+                // Append to main container
+                cnt.appendChild(userDiv);
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching users:", error);
+        });
+    </script>
+
+</body>
+</html>
